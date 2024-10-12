@@ -4,7 +4,7 @@ import { useAuth } from "@clerk/clerk-expo";
 import React, { useState } from "react";
 import { Alert, Image, Text, View } from "react-native";
 import { ReactNativeModal } from "react-native-modal";
-
+import { Link, router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
 import { images } from "@/constants";
 import { useLocationStore } from "@/store";
@@ -34,8 +34,8 @@ const Payment = ({
       destination_latitude: destinationLatitude,
       destination_longitude: destinationLongitude,
       ride_time: rideTime.toFixed(0),
-      fare_price: parseInt(amount) * 100, // Adjust as needed
-      payment_status: "paid", // Assuming payment is confirmed
+      fare_price: parseInt(amount) * 100, 
+      payment_status: "paid", 
       driver_id: driverId,
       user_id: userId,
     };
@@ -63,11 +63,11 @@ const Payment = ({
       <CustomButton
         title="Confirm Ride"
         className="my-10"
-        onPress={() => setWalletModalVisible(true)} // Open the wallet modal
+        onPress={() => setWalletModalVisible(true)} 
       />
       </View>
 
-      {/* Wallet Connection Modal */}
+     
       <ReactNativeModal
         isVisible={walletModalVisible}
         onBackdropPress={() => setWalletModalVisible(false)} 
@@ -93,8 +93,8 @@ const Payment = ({
 
           <WagmiDemo setBookingSuccess={(success) => {
             if (success) {
-              setSuccess(true); // Set success modal visibility
-              storeRideDetails(); // Call function to store ride details
+              setSuccess(true); 
+              storeRideDetails(); 
             }
           }} />
 
@@ -124,7 +124,8 @@ const Payment = ({
             title="Back Home"
             onPress={() => {
               setSuccess(false);
-              // Navigate to home or other screen
+              router.push(`/(root)/(tabs)/rides`);
+      
             }}
             className="mt-5"
           />
@@ -136,10 +137,10 @@ const Payment = ({
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    flex: 1, // Allow the container to take full height
-    justifyContent: "center", // Center vertically
-    alignItems: "center", // Center horizontally
-    marginBottom: 20, // Add some space from the bottom
+    flex: 1, 
+    justifyContent: "center", 
+    alignItems: "center", 
+    marginBottom: 20, 
   },
 });
 

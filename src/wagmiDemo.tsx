@@ -84,7 +84,7 @@ export default function WagmiDemo( { setBookingSuccess }: WagmiDemoProps) {
           if (!address) {
             connect({ connector: connectors[0] });
           } else {
-            // Use sign message when connected
+            
             handleSignMessage();
           }
         }}
