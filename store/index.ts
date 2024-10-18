@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 import { DriverStore, LocationStore, MarkerData } from "@/types/type";
+import { getFullUrl, endpoints } from '@/apiConfig';
 
 export const useLocationStore = create<LocationStore>((set) => ({
   userLatitude: null,
@@ -50,11 +51,29 @@ export const useLocationStore = create<LocationStore>((set) => ({
   },
 }));
 
+
 export const useDriverStore = create<DriverStore>((set) => ({
   drivers: [] as MarkerData[],
   selectedDriver: null,
+  loading: false,
   setSelectedDriver: (driverId: number) =>
     set(() => ({ selectedDriver: driverId })),
   setDrivers: (drivers: MarkerData[]) => set(() => ({ drivers })),
   clearSelectedDriver: () => set(() => ({ selectedDriver: null })),
+  fetchDrivers: async () => {
+    set({ loading: true });
+    try {
+      const response = await fetch(getFullUrl(endpoints.drivers));
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const drivers = await response.json();
+      set({ drivers, loading: false });
+    } catch (error) {
+      console.error('Failed to fetch drivers:', error);
+      set({ loading: false });
+    }
+  },
 }));
+
+

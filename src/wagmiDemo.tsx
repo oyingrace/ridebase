@@ -23,7 +23,7 @@ import { useCapabilities } from "wagmi/experimental";
 import { useNavigation } from "@react-navigation/native";
 
 
-const PREFIX_URL = Linking.createURL("/");
+const PREFIX_URL = Linking.createURL("/(root)/(tabs)/home");
 
 export const config = createConfig({
   chains: [baseSepolia],
@@ -44,6 +44,10 @@ export const config = createConfig({
 type WagmiDemoProps = {
   setBookingSuccess: (success: boolean) => void;
 };
+
+
+
+
 
 export default function WagmiDemo( { setBookingSuccess }: WagmiDemoProps) {
   const insets = useSafeAreaInsets();
@@ -84,7 +88,7 @@ export default function WagmiDemo( { setBookingSuccess }: WagmiDemoProps) {
           if (!address) {
             connect({ connector: connectors[0] });
           } else {
-            
+            // Use sign message when connected
             handleSignMessage();
           }
         }}

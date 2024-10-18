@@ -24,7 +24,7 @@ const queryClient = new QueryClient();
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
+const publishableKey = "pk_test_c3VpdGFibGUtZ2VsZGluZy0xOC5jbGVyay5hY2NvdW50cy5kZXYk";
 
 if (!publishableKey) {
   throw new Error(
@@ -33,8 +33,8 @@ if (!publishableKey) {
 }
 
 LogBox.ignoreLogs([
-  "Clerk:", // Ignores Clerk warnings
-  "MapViewDirections Error", // Ignores MapViewDirections warnings
+  "Clerk:", 
+  "MapViewDirections Error", 
   "No route data found from driver to user",
   "No route data found from user to destination",
   "openrouteservice",

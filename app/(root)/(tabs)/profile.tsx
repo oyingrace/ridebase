@@ -1,15 +1,16 @@
+
+
 import { useUser } from "@clerk/clerk-expo";
-import { Image, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import InputField from "@/components/InputField";
-import { fetchAPI } from "@/lib/fetch";
-import { useEffect, useState } from "react";
-import { useFetch } from "@/lib/fetch"; // Import your custom useFetch hook
+
 
 
 const Profile = () => {
   const { user } = useUser();
+  
   
   return (
     <SafeAreaView className="flex-1">
@@ -33,20 +34,13 @@ const Profile = () => {
           <View className="flex flex-col items-start justify-start w-full">
             <InputField
               label="Base name"
-              placeholder={ "loading" || "Not Found"}
+              placeholder={"Loading"}
               containerStyle="w-full"
               inputStyle="p-3.5"
               editable={false}
               placeholderTextColor="#6B7280"
             />
 
-            {/* <InputField 
-              label="Last name"
-              placeholder={user?.lastName || "Not Found"}
-              containerStyle="w-full"
-              inputStyle="p-3.5"
-              editable={false}
-            /> */}
 
             <InputField
               label="Email"

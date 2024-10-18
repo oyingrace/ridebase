@@ -5,12 +5,14 @@ import React, { useState } from "react";
 import { Alert, Image, Text, View } from "react-native";
 import { ReactNativeModal } from "react-native-modal";
 import { Link, router } from "expo-router";
+
 import CustomButton from "@/components/CustomButton";
 import { images } from "@/constants";
 import { useLocationStore } from "@/store";
 import { PaymentProps } from "@/types/type";
 import WagmiDemo from "@/src/wagmiDemo"; 
 import { fetchAPI } from "@/lib/fetch";
+import {getFullUrl, endpoints} from "@/apiConfig";
 
 const Payment = ({
   fullName,
@@ -34,24 +36,45 @@ const Payment = ({
       destination_latitude: destinationLatitude,
       destination_longitude: destinationLongitude,
       ride_time: rideTime.toFixed(0),
-      fare_price: parseInt(amount) * 100, 
-      payment_status: "paid", 
+      fare_price: parseInt(amount) * 100, // Adjust as needed
+      payment_status: "paid", // Assuming payment is confirmed
       driver_id: driverId,
       user_id: userId,
     };
 
-    try {
-      const response = await fetchAPI("/(api)/ride/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(rideDetails),
-      });
 
-    } catch (error) {
-      console.warn("Error storing ride details:", error);
+  const rideUrl = getFullUrl(endpoints.createRide); // Get the API URL
+  console.log("Ride API URL:", rideUrl); // Log the API URL
+
+  try {
+    const response = await fetchAPI(rideUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(rideDetails),
+    });
+
+    // Log the entire response for debugging
+    console.log('Response:', response);
+
+    // Check for response status
+    if (!response.ok) {
+      const errorData = await response.json(); // Get the error message if available
+      throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorData.error}`);
     }
+
+    const data = await response.json(); // Assuming the response contains the ride data
+    console.log('Ride created successfully:', data);
+  } catch (error: unknown) { // Specify the type of error
+    if (error instanceof Error) {
+      console.warn("Error storing ride details:", error.message); // Log the error message
+    } else {
+      console.warn("An unknown error occurred while storing ride details:", error); // Log the unknown error
+    }
+  }
+
+    
   };
 
 
@@ -63,11 +86,11 @@ const Payment = ({
       <CustomButton
         title="Confirm Ride"
         className="my-10"
-        onPress={() => setWalletModalVisible(true)} 
+        onPress={() => setWalletModalVisible(true)} // Open the wallet modal
       />
       </View>
 
-     
+      {/* Wallet Connection Modal */}
       <ReactNativeModal
         isVisible={walletModalVisible}
         onBackdropPress={() => setWalletModalVisible(false)} 
@@ -93,8 +116,8 @@ const Payment = ({
 
           <WagmiDemo setBookingSuccess={(success) => {
             if (success) {
-              setSuccess(true); 
-              storeRideDetails(); 
+              setSuccess(true); // Set success modal visibility
+              storeRideDetails(); // Call function to store ride details
             }
           }} />
 
@@ -125,7 +148,6 @@ const Payment = ({
             onPress={() => {
               setSuccess(false);
               router.push(`/(root)/(tabs)/rides`);
-      
             }}
             className="mt-5"
           />
@@ -137,10 +159,10 @@ const Payment = ({
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    flex: 1, 
-    justifyContent: "center", 
-    alignItems: "center", 
-    marginBottom: 20, 
+    flex: 1, // Allow the container to take full height
+    justifyContent: "center", // Center vertically
+    alignItems: "center", // Center horizontally
+    marginBottom: 20, // Add some space from the bottom
   },
 });
 

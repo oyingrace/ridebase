@@ -77,9 +77,9 @@
            onChangeText={(text) => {
              setQuery(text);
              if (text.length > 2) {
-               searchLocation(text); 
+               searchLocation(text); // Trigger search when user types more than 2 characters
              } else {
-               setResults([]); 
+               setResults([]); // Clear results when input is too short
              }
            }}
          />
@@ -107,8 +107,8 @@
                    longitude: parseFloat(item.lon),
                    address: item.display_name,
                  });
-                 setQuery(item.display_name); 
-                 setResults([]); 
+                 setQuery(item.display_name); // Set the selected place in the input field
+                 setResults([]); // Clear results after selection
                }}
                style={{
                  padding: 10,

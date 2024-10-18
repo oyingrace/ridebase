@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useUser } from "@clerk/clerk-expo";
 import { ActivityIndicator, FlatList, Image, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -6,6 +7,7 @@ import RideCard from "@/components/RideCard";
 import { images } from "@/constants";
 import { useFetch } from "@/lib/fetch";
 import { Ride } from "@/types/type";
+import { getFullUrl, endpoints } from "@/apiConfig";
 
 const Rides = () => {
   const { user } = useUser();
@@ -14,7 +16,8 @@ const Rides = () => {
     data: recentRides,
     loading,
     error,
-  } = useFetch<Ride[]>(`/(api)/ride/${user?.id}`);
+  } = useFetch<Ride[]>(getFullUrl(`${endpoints.getRide(user?.id || '')}`));
+  
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -54,4 +57,5 @@ const Rides = () => {
   );
 };
 
-export default Rides;
+export default Rides; 
+

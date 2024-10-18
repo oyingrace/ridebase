@@ -2,7 +2,7 @@ import { neon } from "@neondatabase/serverless";
 
 export async function POST(request: Request) {
   try {
-    const sql = neon(`${process.env.DATABASE_URL}`);
+    const sql = neon('postgresql://uber-db_owner:5pyR6jhHCoqS@ep-fragrant-hall-a5vfluze.us-east-2.aws.neon.tech/uber-db?sslmode=require');
     const { name, email, clerkId } = await request.json();
 
     if (!name || !email || !clerkId) {
@@ -31,4 +31,5 @@ export async function POST(request: Request) {
     console.error("Error creating user:", error);
     return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
-}
+} 
+

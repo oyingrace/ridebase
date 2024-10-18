@@ -10,6 +10,7 @@ import InputField from "@/components/InputField";
 import OAuth from "@/components/OAuth";
 import { icons, images } from "@/constants";
 import { fetchAPI } from "@/lib/fetch";
+import {getFullUrl, endpoints} from "@/apiConfig";
 
 const SignUp = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -33,7 +34,7 @@ const SignUp = () => {
       Toast.show({
         type: 'error',
         text1: 'Validation Error',
-        text2: "Username must end with 'base.eth'.",
+        text2: "This is not a registered basename!",
         position: 'top',
         visibilityTime: 4000,
         topOffset: 50,
@@ -66,7 +67,7 @@ const SignUp = () => {
         code: verification.code,
       });
       if (completeSignUp.status === "complete") {
-        await fetchAPI("/(api)/user", {
+        await fetchAPI(getFullUrl(endpoints.users), {
           method: "POST",
           body: JSON.stringify({
             name: form.name,
@@ -108,7 +109,7 @@ const SignUp = () => {
         <View className="p-5">
           <InputField
             label="Base Name"
-            placeholder="Name must end with base.eth"
+            placeholder="registered names only!"
             icon={icons.person}
             value={form.name}
             placeholderTextColor="#6B7280"

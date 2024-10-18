@@ -32,13 +32,23 @@
       [
         "expo-router",
         {
-          "origin": "https://uber.dev/"
+          "origin": "https://riidebase-dev.vercel.app/"
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
     },
-    "jsEngine": "jsc" 
+    "jsEngine": "jsc",
+    "extra": {
+      "eas": {
+        "projectId": "e6a289b2-730c-42ad-8509-1b96330ca367"
+      },
+      "polyfill": true
+    },
+    "runtimeVersion": "1.0.0",
+    "updates": {
+      "url": "https://u.expo.dev/e6a289b2-730c-42ad-8509-1b96330ca367"
+    }
   }
 }
