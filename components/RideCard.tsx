@@ -4,6 +4,8 @@ import { icons } from "@/constants";
 import { formatDate, formatTime } from "@/lib/utils";
 import { Ride } from "@/types/type";
 
+const geoapifyApiKey = process.env.EXPO_PUBLIC_GEOAPIFY_API_KEY;
+
 const RideCard = ({ ride }: { ride: Ride }) => {
   return (
     <View className="flex flex-row items-center justify-center bg-white rounded-lg shadow-sm shadow-neutral-300 mb-3">
@@ -11,7 +13,7 @@ const RideCard = ({ ride }: { ride: Ride }) => {
         <View className="flex flex-row items-center justify-between">
           <Image
             source={{
-              uri: `https://maps.geoapify.com/v1/staticmap?style=osm-bright&width=600&height=400&center=lonlat:${ride.destination_longitude},${ride.destination_latitude}&zoom=14&apiKey=f8fc6a20c3cc4dc0bda11487e1adc268`,
+              uri: `https://maps.geoapify.com/v1/staticmap?style=osm-bright&width=600&height=400&center=lonlat:${ride.destination_longitude},${ride.destination_latitude}&zoom=14&apiKey=${geoapifyApiKey}`,
             }}
             className="w-[80px] h-[90px] rounded-lg"
           />

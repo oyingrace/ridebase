@@ -5,8 +5,8 @@ export async function GET(request: Request, { id }: { id: string }) {
     return Response.json({ error: "Missing required fields" }, { status: 400 });
 
   try {
-    const sql = neon('postgresql://uber-db_owner:5pyR6jhHCoqS@ep-fragrant-hall-a5vfluze.us-east-2.aws.neon.tech/uber-db?sslmode=require');
-    const response = await sql`
+    const sql = neon(`${process.env.DATABASE_URL}`);
+       const response = await sql`
         SELECT
             rides.ride_id,
             rides.origin_address,

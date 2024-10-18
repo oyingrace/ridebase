@@ -24,7 +24,7 @@ const queryClient = new QueryClient();
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-const publishableKey = "pk_test_c3VpdGFibGUtZ2VsZGluZy0xOC5jbGVyay5hY2NvdW50cy5kZXYk";
+const publishableKey = "process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY";
 
 if (!publishableKey) {
   throw new Error(
